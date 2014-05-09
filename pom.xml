@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>gov.loc</groupId>
+	<artifactId>solr-dataimport-scheduler</artifactId>
+	<packaging>jar</packaging>
+	<name>Solr Dataimport Scheduler</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<description>A scheduler for performing solr data imports.</description>
+	<url>https://github.com/loc-rdc/solr-dataimport-scheduler</url>
+	<scm>
+		<connection>scm:git:git@github.com:loc-rdc/solr-dataimport-scheduler.git</connection>
+		<developerConnection>scm:git:git@github.com:loc-rdc/solr-dataimport-scheduler.git</developerConnection>
+		<url>git@github.com:loc-rdc/solr-dataimport-scheduler.git</url>
+	</scm>
+	<properties>
+		<quartz>2.2.1</quartz>
+	</properties>
+	<developers>
+		<developer>
+			<id>justin</id>
+			<name>Justin Littman</name>
+			<email>jlit@loc.gov</email>
+		</developer>
+	</developers>
+	<dependencies>
+		<dependency>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz</artifactId>
+		    <version>${quartz}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz-jobs</artifactId>
+		    <version>${quartz}</version>
+		</dependency>
+		<!-- This is entirely entraneous, but XMLSchedulingDataProcessorPlugin references it. -->
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty.orbit</groupId>
+			<artifactId>javax.servlet</artifactId>
+			<version>3.0.0.v201112011016</version>
+			<scope>provided</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-core</artifactId>
+            <version>4.8.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+  			<groupId>org.apache.httpcomponents</groupId>
+ 			<artifactId>fluent-hc</artifactId>
+  			<version>4.3.2</version>
+ 		</dependency> 		
+	</dependencies>
+</project>

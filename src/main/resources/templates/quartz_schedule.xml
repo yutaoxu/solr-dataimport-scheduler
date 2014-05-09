@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job-scheduling-data xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData http://www.quartz-scheduler.org/xml/job_scheduling_data_2_0.xsd"
+    version="1.8">
+
+	<!-- Consult the xsd for more complete scheduling options. -->    
+    <schedule>
+	    <job>
+	        <name>DataImportJob</name>
+	        <job-class>gov.loc.repository.quartz.DataImportJob</job-class>
+	        <job-data-map>
+	        	<!-- Url for solr webapp. Default is http://localhost:8080/solr. -->
+	            <entry>
+	                <key>solrUrl</key>
+	                <value>http://solr.loc.gov/solr</value>
+	            </entry>
+	            <!-- A comma-separated list of cores. If not provided, uses default core. -->
+	            <entry>
+	            	<key>cores</key>
+	            	<value>core1,core2</value>
+	            </entry>
+	        </job-data-map>
+	    </job>
+	    	    
+	    <trigger>
+	    	<!-- This is a simple trigger. http://quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-05 -->
+	        <simple>
+	            <name>FullDataImportJobOnce</name>
+	            <job-name>DataImportJob</job-name>
+		        <job-data-map>
+		        	<!-- Note that settings can go in job's job-data-map or
+		        		 trigger's job-data-map depending on which is appropriate. -->
+		        	<!-- full-import or delta-import.  Default is full-import. -->
+		            <entry>
+		                <key>command</key>
+		                <value>full-import</value>
+		            </entry>
+		            <!-- Other settings are clean, optimize, and commit. -->
+		        </job-data-map>
+		        <!-- Execute 15 seconds after solr starts. -->	            
+	            <start-time-seconds-in-future>15</start-time-seconds-in-future>
+	            <!-- Only perform once. -->
+	            <repeat-count>0</repeat-count>
+	            <!-- Since not repeating, repeat-interval set to 0. -->
+	            <repeat-interval>0</repeat-interval>
+	        </simple>
+	    </trigger>
+	    
+	    <trigger>
+	    	<!-- This is a cron trigger. See http://quartz-scheduler.org/documentation/quartz-2.x/tutorials/tutorial-lesson-06 -->
+	    	<cron>
+	    		<name>DailyDeltaDataImport</name>
+	    		<job-name>DataImportJob</job-name>
+		        <job-data-map>
+		            <entry>
+		                <key>command</key>
+		                <value>delta-import</value>
+		            </entry>
+		        </job-data-map>
+		        <!-- Every night at 4:30. -->
+		        <!-- seconds minutes hours day-of-month month day-of-week -->
+		        <cron-expression>0 30 4 * * ?</cron-expression>
+	    	</cron>
+	    	
+	    </trigger>	
+    </schedule>    
+</job-scheduling-data>
